@@ -11,7 +11,9 @@ import SessionStore from 'app/stores/session';
 import WindowsStore from 'app/stores/windows';
 
 import environment from 'app/environment';
-import { StatusBlock } from 'app/interfaces';
+import { types } from '@tlecommunity/client';
+
+import YAHOO from 'app/shims/yahoo';
 
 interface ServerRequest {
   module: string;
@@ -25,6 +27,7 @@ interface ServerRequest {
 interface ServerError {
   code: number;
   message: string;
+  data?: any;
 }
 
 interface RequestBody {
@@ -111,13 +114,35 @@ const sendRequest = function (
       MenuStore.hideLoader();
       const error: ServerError = jqXHR?.responseJSON?.error || {
         code: -1,
-        message: jqXHR.responseText,
+        message: jqXHR.responseText || 'Could not communicate with server',
       };
 
-      if (error.code === 1016) {
+      if (error.code === 1016) { // Needs to solve captcha
         WindowsStore.add('captcha', {
-          onCaptchaComplete: retry,
+          onCaptchaComplete: () => retry(),
         });
+      } else if (error.code === 1100) { // Empire not founded
+        const empireId = util.int(error.data.empire_id);
+        const Lacuna = YAHOO.lacuna;
+        const { Game } = Lacuna;
+
+        Game.SpeciesCreator = new Lacuna.CreateSpecies({
+          handleCancel: () => {
+            WindowsStore.add('login');
+          },
+        });
+
+        Game.SpeciesCreator.subscribe(
+          'onCreateSuccessful',
+          (oArgs: any) => {
+            Game.LoginDialog.fireEvent('onLoginSuccessful', oArgs);
+          },
+          this,
+          true
+        );
+
+        WindowsStore.closeAll();
+        Game.SpeciesCreator.show(empireId);
       } else {
         handleError(options, error);
       }
@@ -144,18 +169,15 @@ export const call = function (obj: ServerRequest): void {
 // Split the status message into server, body, empire
 // and call the corresponding actions
 //
-export const splitStatus = function (status: StatusBlock): void {
+export const splitStatus = function (status: types.Status.StatusBlock): void {
   if (status.server) {
-    const serverStatus = util.fixNumbers(_.cloneDeep(status.server));
-    ServerRPCStore.update(serverStatus);
+    ServerRPCStore.update(status.server);
   }
   if (status.empire) {
-    const empireStatus = util.fixNumbers(_.cloneDeep(status.empire));
-    EmpireRPCStore.update(empireStatus);
+    EmpireRPCStore.update(status.empire);
   }
   if (status.body) {
-    const bodyStatus = util.fixNumbers(_.cloneDeep(status.body));
-    BodyRPCStore.update(bodyStatus);
+    BodyRPCStore.update(status.body);
   }
 };
 

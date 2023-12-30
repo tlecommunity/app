@@ -35,7 +35,8 @@ if (
         return [this._getPlanTab(), this._getResourcesTab(), this._getNotesTab()];
       },
       _getPlanetTab: function () {
-        var planet = BodyRPCStore;
+        var planet = this.result.planet;
+        var result = this.result;
         var details = function (type, imgclass) {
           var Type = Lib.capitalizeFirstLetter(type);
           var stored = planet[type + '_stored'] || planet[type];
@@ -107,34 +108,34 @@ if (
             Lib.formatNumber(planet.population),
             '</li>',
             '            <li title="',
-            Lib.formatNumber(BodyRPCStore.next_colony_cost),
+            Lib.formatNumber(result.next_colony_cost),
             '"><label>Next Colony Cost:</label>',
-            util.reduceNumber(BodyRPCStore.next_colony_cost),
+            util.reduceNumber(result.next_colony_cost),
             '<span class="smallImg"><img src="',
             Lib.AssetUrl,
             'ui/s/happiness.png" /></span></li>',
             '            <li title="',
-            Lib.formatNumber(BodyRPCStore.next_colony_srcs),
+            Lib.formatNumber(result.next_colony_srcs),
             '"><label>Next <span title="Short Range Colony Ship">SRCS</span> Cost:</label>',
-            util.reduceNumber(BodyRPCStore.next_colony_srcs),
+            util.reduceNumber(result.next_colony_srcs),
             '<span class="smallImg"><img src="',
             Lib.AssetUrl,
             'ui/s/happiness.png" /></span></li>',
-            BodyRPCStore.next_station_cost
+            result.next_station_cost
               ? [
                   '<li title="',
-                  Lib.formatNumber(BodyRPCStore.next_station_cost),
+                  Lib.formatNumber(result.next_station_cost),
                   '"><label>Next Station Cost:</label>',
-                  util.reduceNumber(BodyRPCStore.next_station_cost),
+                  util.reduceNumber(result.next_station_cost),
                   '<span class="smallImg"><img src="',
                   Lib.AssetUrl,
                   'ui/s/happiness.png" /></span></li>',
                 ].join('')
               : '',
             '            <li title="',
-            Lib.formatNumber(BodyRPCStore.insurrect_value),
+            Lib.formatNumber(result.insurrect_value),
             '"><label>Insurrect Value:</label>',
-            util.reduceNumber(BodyRPCStore.insurrect_value),
+            util.reduceNumber(result.insurrect_value),
             '<span class="smallImg"><img src="',
             Lib.AssetUrl,
             'ui/s/happiness.png" /></span></li>',
@@ -256,13 +257,13 @@ if (
             '<li><label>',
             food.titleCaps(),
             '</label><span class="pcStored" title="',
-            Lib.formatNumber(BodyRPCStore[food + '_stored']),
+            Lib.formatNumber(this.result.food[food + '_stored']),
             '">',
-            util.reduceNumber(BodyRPCStore[food + '_stored']),
+            util.reduceNumber(this.result.food[food + '_stored']),
             '</span> @ <span class="pcPerHour" title="',
-            Lib.formatNumber(BodyRPCStore[food + '_hour']),
+            Lib.formatNumber(this.result.food[food + '_hour']),
             '">',
-            util.reduceNumber(BodyRPCStore[food + '_hour']),
+            util.reduceNumber(this.result.food[food + '_hour']),
             '</span>/hr</li>',
           ].join('');
         }
@@ -277,36 +278,36 @@ if (
             '<li><label>',
             ore.titleCaps(),
             '</label><span class="pcStored" title="',
-            Lib.formatNumber(BodyRPCStore[ore + '_stored']),
+            Lib.formatNumber(this.result.ore[ore + '_stored']),
             '">',
-            util.reduceNumber(BodyRPCStore[ore + '_stored']),
+            util.reduceNumber(this.result.ore[ore + '_stored']),
             '</span> @ <span class="pcPerHour" title="',
-            Lib.formatNumber(BodyRPCStore[ore + '_hour']),
+            Lib.formatNumber(this.result.ore[ore + '_hour']),
             '">',
-            util.reduceNumber(BodyRPCStore[ore + '_hour']),
+            util.reduceNumber(this.result.ore[ore + '_hour']),
             '</span>/hr</li>',
           ].join('');
         }
         ore_items += [
           '<li><label>Water</label><span class="pcStored" title="',
-          Lib.formatNumber(BodyRPCStore.water_stored),
+          Lib.formatNumber(this.result.planet.water_stored),
           '">',
-          util.reduceNumber(BodyRPCStore.water_stored),
+          util.reduceNumber(this.result.planet.water_stored),
           '</span> @ <span class="pcPerHour" title="',
-          Lib.formatNumber(BodyRPCStore.water_hour),
+          Lib.formatNumber(this.result.planet.water_hour),
           '">',
-          util.reduceNumber(BodyRPCStore.water_hour),
+          util.reduceNumber(this.result.planet.water_hour),
           '</span>/hr</li>',
         ].join('');
         ore_items += [
           '<li><label>Energy</label><span class="pcStored" title="',
-          Lib.formatNumber(BodyRPCStore.energy_stored),
+          Lib.formatNumber(this.result.planet.energy_stored),
           '">',
-          util.reduceNumber(BodyRPCStore.energy_stored),
+          util.reduceNumber(this.result.planet.energy_stored),
           '</span> @ <span class="pcPerHour" title="',
-          Lib.formatNumber(BodyRPCStore.energy_hour),
+          Lib.formatNumber(this.result.planet.energy_hour),
           '">',
-          util.reduceNumber(BodyRPCStore.energy_hour),
+          util.reduceNumber(this.result.planet.energy_hour),
           '</span>/hr</li>',
         ].join('');
 
@@ -331,7 +332,7 @@ if (
         return this.resourcesTab;
       },
       _getNotesTab: function () {
-        var notes = BodyRPCStore.notes;
+        var notes = this.result.planet.notes;
         this.notesTab = new YAHOO.widget.Tab({
           label: 'Notes',
           content: [

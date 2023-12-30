@@ -84,6 +84,8 @@ test('util.fixNumbers', () => {
   expect(util.fixNumbers({ foo: [{ bar: '1.0' }] })).toStrictEqual({ foo: [{ bar: 1.0 }] });
   expect(util.fixNumbers({ foo: [{ bar: '1.1' }] })).toStrictEqual({ foo: [{ bar: 1.1 }] });
   expect(util.fixNumbers({ foo: [{ bar: '1.1.1' }] })).toStrictEqual({ foo: [{ bar: '1.1.1' }] });
+  expect(util.fixNumbers(1)).toStrictEqual(1);
+  expect(util.fixNumbers('ok')).toStrictEqual('ok');
 });
 
 test('util.ensureTrailingSlash', () => {

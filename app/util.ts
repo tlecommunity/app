@@ -160,6 +160,9 @@ const handleObj = function (obj: any): any {
 };
 
 export const fixNumbers = function (data: any): any {
+  if (_.isNumber(data) || _.isString(data)) {
+    return data;
+  }
   return _.mapValues(data, handleObj);
 };
 

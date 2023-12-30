@@ -11,12 +11,14 @@ type Props = {
   options: BuildingWindowOptions;
 };
 
-type State = {
-  building: Building;
+type State<Type> = {
+  building: Type;
 };
 
-const withBuildingData = (WrappedComponent: React.ComponentType<BuildingComponentProps>) =>
-  class extends React.Component<Props, State> {
+function withBuildingData<Type extends Building>(
+  WrappedComponent: React.ComponentType<BuildingComponentProps<Type>>
+) {
+  return class extends React.Component<Props, State<Type>> {
     constructor(props: any) {
       super(props);
       this.state = {
@@ -90,7 +92,7 @@ const withBuildingData = (WrappedComponent: React.ComponentType<BuildingComponen
       server.call({
         module: this.props.options.url.replace(/^\//, ''),
         method: 'view',
-        params: [this.props.options.id],
+        params: { building_id: this.props.options.id },
         addSession: true,
         success: (result: BuildingsViewResponse) => {
           this.setState({ building: result.building });
@@ -115,5 +117,6 @@ const withBuildingData = (WrappedComponent: React.ComponentType<BuildingComponen
       return <WrappedComponent building={this.state.building} {...this.props} />;
     }
   };
+}
 
 export default withBuildingData;

@@ -27,7 +27,7 @@ class InviteWindow extends React.Component {
 
   render() {
     const defaultMessage = [
-      "I'm having a great time with this new game called 'Kenó Antigen'.",
+      "I'm having a great time with this new game called 'Lacuna Expanse'.",
       'Come play with me!',
     ].join(' ');
 

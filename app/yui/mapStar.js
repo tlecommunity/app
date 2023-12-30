@@ -722,10 +722,30 @@ if (typeof YAHOO.lacuna.MapStar == 'undefined' || !YAHOO.lacuna.MapStar) {
           var tile = this._map.tileLayer.findTileById(matchedEl.id);
           if (tile && tile.data) {
             if (tile.data.isStar) {
+              console.log('Showing star panel', tile);
               this.ShowStar(tile);
-              WindowsStore.add('starPanel', tile);
+              WindowsStore.add('starDetails', {
+                color: tile.data.color,
+                id: tile.data.id,
+                name: tile.data.name,
+                x: tile.data.x,
+                y: tile.data.y,
+                zone: tile.data.zone,
+                influence: tile.data.influence,
+              });
             } else if (tile.data.isPlanet) {
-              WindowsStore.add('planetPanel', tile);
+              console.log('Showing planet panel', tile);
+              this.ShowPlanet(tile);
+              WindowsStore.add('bodyDetails', {
+                name: tile.data.name,
+                x: tile.data.x,
+                y: tile.data.y,
+                image: tile.data.image,
+                orbit: tile.data.orbit,
+                size: tile.data.size,
+                id: tile.data.id,
+                type: tile.data.type,
+              });
             }
           }
         }
@@ -1443,47 +1463,37 @@ if (typeof YAHOO.lacuna.MapStar == 'undefined' || !YAHOO.lacuna.MapStar) {
       },
 
       GetShips: function (panel, target) {
-        if (!this.currentShips) {
-          MenuStore.showLoader();
-
-          Game.Services.Buildings.SpacePort.get_ships_for(
-            {
-              session_id: Game.GetSession(),
-              from_body_id: BodyRPCStore.id,
-              target: target,
-            },
-            {
-              success: function (o) {
-                YAHOO.log(o, 'info', 'MapStar.ShowStar.get_ships_for.success');
-                MenuStore.hideLoader();
-                this.fireEvent('onMapRpc', o.result);
-                this.currentShips = o.result;
-
-                this.PopulateShipsSendTab(panel);
-
-                this.PopulateFleetSendTab(panel);
-
-                this.PopulateShipsUnavailTab(panel);
-
-                this.PopulateShipsIncomingTab(panel);
-
-                this.PopulateShipsOrbitingTab(panel);
-
-                this.PopulateShipsMiningPlatforms(panel);
-
-                this.PopulateShipsExcavators(panel);
-
-                panel.removeTabs(); //remove any tabs that are removable before adding new ones
-
-                //select 0 index tab unless we already selected a different one
-                /*if(panel.tabView.get("activeIndex") <= 0) {
-                            panel.tabView.selectTab(0);
-                        }*/
-              },
-              scope: this,
-            }
-          );
-        }
+        // if (!this.currentShips) {
+        //   MenuStore.showLoader();
+        //   Game.Services.Buildings.SpacePort.get_ships_for(
+        //     {
+        //       session_id: Game.GetSession(),
+        //       from_body_id: BodyRPCStore.id,
+        //       target: target,
+        //     },
+        //     {
+        //       success: function (o) {
+        //         YAHOO.log(o, 'info', 'MapStar.ShowStar.get_ships_for.success');
+        //         MenuStore.hideLoader();
+        //         this.fireEvent('onMapRpc', o.result);
+        //         this.currentShips = o.result;
+        //         this.PopulateShipsSendTab(panel);
+        //         this.PopulateFleetSendTab(panel);
+        //         this.PopulateShipsUnavailTab(panel);
+        //         this.PopulateShipsIncomingTab(panel);
+        //         this.PopulateShipsOrbitingTab(panel);
+        //         this.PopulateShipsMiningPlatforms(panel);
+        //         this.PopulateShipsExcavators(panel);
+        //         panel.removeTabs(); //remove any tabs that are removable before adding new ones
+        //         //select 0 index tab unless we already selected a different one
+        //         /*if(panel.tabView.get("activeIndex") <= 0) {
+        //                     panel.tabView.selectTab(0);
+        //                 }*/
+        //       },
+        //       scope: this,
+        //     }
+        //   );
+        // }
       },
       ShowStar: function (tile, keepOpen) {
         if (!keepOpen) {

@@ -26,11 +26,11 @@ const Inbox: Route = {
           image: {
             url: `${req.protocol}://${req.get('host')}/email_attachment.png`,
             title: 'You can include image attachments!',
-            link: 'http://kenoantigen.com/', // optional link to somewhere
+            link: 'http://lacunaexpanse.com/', // optional link to somewhere
           },
           link: {
-            url: 'http://kenoantigen.com/',
-            label: 'The Kenó Antigen Website',
+            url: 'http://lacunaexpanse.com/',
+            label: 'The Lacuna Expanse Website',
           },
           table: [
             ['Hostname', 'IP Address'], // first row is always a header

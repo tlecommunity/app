@@ -37,7 +37,7 @@ if (typeof YAHOO.lacuna.Game === 'undefined' || !YAHOO.lacuna.Game) {
       HourMS: 3600000, // (60min * 60sec * 1000ms),
       onTick: new Util.CustomEvent('onTick'),
       OverlayManager: new YAHOO.widget.OverlayManager(),
-      domain: window.location.hostname || 'kenoantigen.com',
+      domain: window.location.hostname || 'tlecommunity.com',
       _session: undefined,
       _hasRun: false,
 
@@ -157,7 +157,7 @@ if (typeof YAHOO.lacuna.Game === 'undefined' || !YAHOO.lacuna.Game) {
             {
               width: '500px',
               text: [
-                '<p>An internal error has occurred.  Please report this on <a target="_blank" href="https://github.com/kantigen/ka-server/issues">the support forums</a>, and include the data below.</p>',
+                '<p>An internal error has occurred.  Please report this on <a target="_blank" href="https://github.com/tlecommunity/v2/issues">the support forums</a>, and include the data below.</p>',
                 '<textarea style="width: 100%; height: 300px;" id="internalErrorMessageText" readonly="readonly" onclick="this.select()"></textarea>',
               ].join(''),
               buttons: [
@@ -242,7 +242,7 @@ if (typeof YAHOO.lacuna.Game === 'undefined' || !YAHOO.lacuna.Game) {
         //@ts-expect-error
         Game.escListener.enable();
 
-        document.title = `KA - ${EmpireRPCStore.name}`;
+        document.title = `Lacuna Expanse - ${EmpireRPCStore.name}`;
 
         SessionStore.update(Game.GetSession(''));
         MenuStore.showMenu();
@@ -471,7 +471,7 @@ if (typeof YAHOO.lacuna.Game === 'undefined' || !YAHOO.lacuna.Game) {
         //@ts-expect-error
         Game.escListener.disable();
 
-        document.title = 'Kenó Antigen';
+        document.title = 'Lacuna Expanse';
         Game.RemoveCookie('locationId');
         Game.RemoveCookie('locationView');
 

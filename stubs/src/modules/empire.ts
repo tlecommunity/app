@@ -152,7 +152,7 @@ const Empire: Route = {
 
   get_invite_friend_url(req, res) {
     return {
-      referral_url: 'https://demo.kenoantigen.com/',
+      referral_url: 'https://demo.lacunaexpanse.com/',
       status: Empire.get_status(req, res),
     };
   },

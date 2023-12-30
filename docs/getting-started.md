@@ -5,7 +5,7 @@
 3. Fork this repository
 4. Clone your fork to your machine: `git clone https://github.com/<your-username>/Lacuna-Web-Client`
 5. Enter your fork: `cd Lacuna-Web-Client`
-7. Get going: `gulp dev`
+6. Get going: `gulp dev`
 
 # Next Steps
 
@@ -14,4 +14,4 @@ If you...
 - haven't worked with React and Reflux before, try [Concepts](concepts.md)
 - haven't used Gulp before, try [Gulp Tasks](gulp-tasks.md)
 - are ready to dive into the code, try [Important Notes](important-notes.md)
-- have no idea what to do now, [ask us!](https://github.com/Kantigen/ka-web/issues)
+- have no idea what to do now, [ask us!](https://github.com/tlecommunity/app/issues)

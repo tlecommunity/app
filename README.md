@@ -1,10 +1,8 @@
-# KA Web
+# Lacuna Expanse Frontend
 
-Web client for the up-and-coming community edition of The Lacuna Expanse, known as "Kenó Antigen".
+Web client for the up-and-coming community edition of The Lacuna Expanse.
 
-[![CircleCI Build Status](https://circleci.com/gh/Kantigen/ka-web/tree/master.svg?style=svg)](https://circleci.com/gh/Kantigen/ka-web/tree/master)
-
-[![Kenó Antigen screenshot](docs/img/screenshot.png)](https://demo.kenoantigen.com/)
+[![Lacuna Expanse screenshot](img/screenshot.png)](https://demo.tlecommunity.com/)
 
 # Setup
 
@@ -27,9 +25,9 @@ The client has two run modes for local development:
 
 # Ideas
 
-Got an idea? [Let us know!](https://github.com/Kantigen/ka-web/issues)
+Got an idea? [Let us know!](https://github.com/tlecommunity/v2/issues)
 
-[![Yoda and feature requests](docs/img/feature-request.jpg)](https://github.com/Kantigen/ka-web/issues)
+[![Yoda and feature requests](img/feature-request.jpg)](https://github.com/tlecommunity/v2/issues)
 
 # Hacking
 

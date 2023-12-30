@@ -7,13 +7,15 @@ import BodyRPCStore from 'app/stores/rpc/body';
 import ActionButton from 'app/components/building/actionButton';
 import ResourceLine from 'app/components/building/resourceLine';
 
-import BuildingsService from 'app/services/buildings';
 import WindowsStore from 'app/stores/windows';
 
 import { Building } from 'app/interfaces';
 
+import lacuna from 'app/lacuna';
+
 import * as util from 'app/util';
 import * as vex from 'app/vex';
+import LegacyHooks from 'app/legacyHooks';
 
 declare const YAHOO: any;
 
@@ -24,32 +26,31 @@ type Props = {
 class ProductionTab extends React.Component<Props> {
   onDemolishClick() {
     const { name, level, url, id } = this.props.building;
-    const module = url.replace('/', '');
 
     vex.confirm(`Are you sure you want to demolish your ${name} ${level}?`, async () => {
-      await BuildingsService.demolish(module, id);
-      YAHOO.lacuna.MapPlanet.Refresh();
+      await lacuna.buildingFromUrl(url).demolish({ building_id: id });
+      LegacyHooks.refreshPlanet();
       WindowsStore.closeAll();
     });
   }
 
   onDowngradeClick() {
     const { name, level, url, id } = this.props.building;
-    const module = url.replace('/', '');
 
     vex.confirm(
       `Are you sure you want to downgrade your ${name} to level ${level - 1}?`,
       async () => {
-        await BuildingsService.downgrade(module, id);
-        YAHOO.lacuna.MapPlanet.Refresh();
+        await lacuna.buildingFromUrl(url).downgrade({ building_id: id });
+        LegacyHooks.refreshPlanet();
         WindowsStore.closeAll();
       }
     );
   }
 
   async onUpgradeClick() {
-    const module = this.props.building.url.replace('/', '');
-    const res = await BuildingsService.upgrade(module, this.props.building.id);
+    const res = await lacuna
+      .buildingFromUrl(this.props.building.url)
+      .upgrade({ building_id: this.props.building.id });
 
     YAHOO.lacuna.MapPlanet.ReloadBuilding({
       ...this.props.building,
@@ -85,7 +86,7 @@ class ProductionTab extends React.Component<Props> {
         </div>
 
         <div className='columns'>
-          <div className='column is-one-third px-5'>
+          <div className='column is-one-third px-6'>
             <ResourceLine
               icon='food'
               content={`${util.reduceNumber(b.food_hour)} / hr`}
@@ -113,12 +114,12 @@ class ProductionTab extends React.Component<Props> {
             />
             <ResourceLine
               icon='happiness'
-              content={`${util.reduceNumber(b.food_hour)} / hr`}
-              title={util.commify(b.food_hour)}
+              content={`${util.reduceNumber(b.happiness_hour)} / hr`}
+              title={util.commify(b.happiness_hour)}
             />
           </div>
 
-          <div className='column is-one-third px-5'>
+          <div className='column is-one-third px-6'>
             <ResourceLine
               icon='food'
               content={`${util.reduceNumber(b.upgrade.production.food_hour)} / hr`}
@@ -150,12 +151,12 @@ class ProductionTab extends React.Component<Props> {
             />
             <ResourceLine
               icon='happiness'
-              content={`${util.reduceNumber(b.upgrade.production.food_hour)} / hr`}
-              title={util.commify(b.upgrade.production.food_hour)}
+              content={`${util.reduceNumber(b.upgrade.production.happiness_hour)} / hr`}
+              title={util.commify(b.upgrade.production.happiness_hour)}
             />
           </div>
 
-          <div className='column is-one-third px-5'>
+          <div className='column is-one-third px-6'>
             <ResourceLine
               icon='food'
               content={util.reduceNumber(b.upgrade.cost.food)}

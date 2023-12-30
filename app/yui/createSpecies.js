@@ -74,8 +74,7 @@ if (typeof YAHOO.lacuna.CreateSpecies == 'undefined' || !YAHOO.lacuna.CreateSpec
           return;
         }
         delete data.affinity_total;
-        data.empire_id = this.empireId;
-        EmpireServ.update_species(data, {
+        EmpireServ.update_species({ empire_id: this.empireId, params: data }, {
           success: function (o) {
             YAHOO.log(o, 'info', 'CreateSpecies');
             this._found();

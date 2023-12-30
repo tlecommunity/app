@@ -33,7 +33,7 @@ class RegisterWindow extends React.Component {
   }
 
   async submit(values: EmpireSchema) {
-    const res = await EmpireService.create({
+    const empireId = await EmpireService.create({
       name: values.empireName,
       email: values.email,
       password: values.password,
@@ -43,7 +43,7 @@ class RegisterWindow extends React.Component {
       captcha_solution: values.captcha,
     });
 
-    if (res.empire_id) {
+    if (empireId && empireId > 1) {
       WindowsStore.close('register');
       const Lacuna = YAHOO.lacuna;
       const { Game } = Lacuna;
@@ -63,7 +63,7 @@ class RegisterWindow extends React.Component {
         true
       );
 
-      Game.SpeciesCreator.show(res.empire_id);
+      Game.SpeciesCreator.show(empireId);
     }
   }
 

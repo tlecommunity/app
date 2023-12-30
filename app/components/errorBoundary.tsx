@@ -25,7 +25,7 @@ class ErrorBoundary extends React.Component<Props, State> {
       {
         width: '500px',
         text: [
-          '<p>A client error has occurred. <br>Please report this on <a target="_blank" href="https://github.com/kantigen/ka-web/issues">the support forums</a>, and include the data below:</p>',
+          '<p>A client error has occurred. <br>Please report this on <a target="_blank" href="https://github.com/tlecommunity/v2/issues">the support forums</a>, and include the data below:</p>',
           '<textarea style="width: 100%; height: 300px;" id="internalErrorMessageText" readonly="readonly" onclick="this.select()">',
           error.toString(),
           '\n',
