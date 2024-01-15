@@ -7,7 +7,7 @@ export default defineConfig({
       { find: 'test', replacement: '/test' },
     ],
   },
-  envPrefix: 'KA_',
+  envPrefix: 'LACUNA_',
   server: {
     port: 3000,
   },

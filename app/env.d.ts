@@ -1,10 +1,10 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly KA_ASSETS_URL: string;
-  readonly KA_SERVER_URL: string;
-  readonly KA_WS_SERVER_URL: string;
-  readonly KA_API_KEY: string;
+  readonly LACUNA_ASSETS_URL: string;
+  readonly LACUNA_SERVER_URL: string;
+  readonly LACUNA_WS_SERVER_URL: string;
+  readonly LACUNA_API_KEY: string;
 }
 
 interface ImportMeta {
