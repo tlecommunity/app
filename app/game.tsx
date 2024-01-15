@@ -157,7 +157,7 @@ if (typeof YAHOO.lacuna.Game === 'undefined' || !YAHOO.lacuna.Game) {
             {
               width: '500px',
               text: [
-                '<p>An internal error has occurred.  Please report this on <a target="_blank" href="https://github.com/tlecommunity/v2/issues">the support forums</a>, and include the data below.</p>',
+                '<p>An internal error has occurred.  Please report this on <a target="_blank" href="https://github.com/tlecommunity/app/issues">the support forums</a>, and include the data below.</p>',
                 '<textarea style="width: 100%; height: 300px;" id="internalErrorMessageText" readonly="readonly" onclick="this.select()"></textarea>',
               ].join(''),
               buttons: [

@@ -24,11 +24,13 @@ class UnavilableFleetsTab extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const { unavailable } = await lacuna.spacePort.viewUnavailableFleets({
+    const { result } = await lacuna.spacePort.viewUnavailableFleets({
       body_id: BodyRPCStore.id,
       target: { star_id: this.props.options.id },
     });
-    this.setState({ fleets: unavailable });
+    if (result) {
+      this.setState({ fleets: result.unavailable });
+    }
   }
 
   render() {

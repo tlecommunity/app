@@ -27,27 +27,35 @@ class BuildQueueTab extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const data = await lacuna.shipyard.viewBuildQueue({ building_id: this.props.building.id });
-    this.setState({
-      data: {
-        number_of_fleets_building: data.number_of_fleets_building,
-        number_of_ships_building: data.number_of_ships_building,
-        cost_to_subsidize: data.cost_to_subsidize,
-        fleets_building: data.fleets_building,
-      },
+    const { result } = await lacuna.shipyard.viewBuildQueue({
+      building_id: this.props.building.id,
     });
+    if (result) {
+      this.setState({
+        data: {
+          number_of_fleets_building: result.number_of_fleets_building,
+          number_of_ships_building: result.number_of_ships_building,
+          cost_to_subsidize: result.cost_to_subsidize,
+          fleets_building: result.fleets_building,
+        },
+      });
+    }
   }
 
   async onSubsidizeClick() {
-    const res = await lacuna.shipyard.subsidizeBuildQueue({ building_id: this.props.building.id });
-    this.setState({
-      data: {
-        number_of_fleets_building: res.number_of_fleets_building,
-        number_of_ships_building: res.number_of_ships_building,
-        cost_to_subsidize: res.cost_to_subsidize,
-        fleets_building: res.fleets_building,
-      },
+    const { result } = await lacuna.shipyard.subsidizeBuildQueue({
+      building_id: this.props.building.id,
     });
+    if (result) {
+      this.setState({
+        data: {
+          number_of_fleets_building: result.number_of_fleets_building,
+          number_of_ships_building: result.number_of_ships_building,
+          cost_to_subsidize: result.cost_to_subsidize,
+          fleets_building: result.fleets_building,
+        },
+      });
+    }
   }
 
   render() {

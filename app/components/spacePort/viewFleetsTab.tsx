@@ -42,14 +42,18 @@ class ViewFleetsTab extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const res = await lacuna.spacePort.viewAllFleets({ building_id: this.props.building.id });
-    this.setState({
-      fleets: res.fleets,
-      numberOfFleets: res.number_of_fleets,
-      docksAvailable: res.docks_available,
-      maxShips: res.max_ships,
-      currentShips: res.max_ships - res.docks_available,
+    const { result } = await lacuna.spacePort.viewAllFleets({
+      building_id: this.props.building.id,
     });
+    if (result) {
+      this.setState({
+        fleets: result.fleets,
+        numberOfFleets: result.number_of_fleets,
+        // docksAvailable: result.docks_available,
+        // maxShips: result.max_ships,
+        // currentShips: result.max_ships - result.docks_available,
+      });
+    }
   }
 
   render() {

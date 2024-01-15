@@ -8,9 +8,11 @@ type Buildings = types.Body.GetBuildingsResponse['buildings'];
 type Arrangement = types.Body.RearrangeBuildingsParams['arrangement'];
 
 class RearrangeBuildingsService {
-  async fetchBuildingsMatrix(bodyId: number): Promise<Matrix> {
-    const res = await lacuna.body.getBuildings({ body_id: bodyId });
-    return this.buildingsToMatrix(res.buildings);
+  async fetchBuildingsMatrix(bodyId: number): Promise<Matrix | undefined> {
+    const { result } = await lacuna.body.getBuildings({ body_id: bodyId });
+    if (result) {
+      return this.buildingsToMatrix(result.buildings);
+    }
   }
 
   buildingsToMatrix(buildings: Buildings): Matrix {
@@ -24,10 +26,7 @@ class RearrangeBuildingsService {
     return matrix;
   }
 
-  rearrangeBuildingsFromMatrix(
-    bodyId: number,
-    matrix: Matrix
-  ): Promise<types.Body.RearrangeBuildingsResponse> {
+  rearrangeBuildingsFromMatrix(bodyId: number, matrix: Matrix) {
     return lacuna.body.rearrangeBuildings({
       body_id: bodyId,
       arrangement: this.matrixToRearrangeCall(matrix),

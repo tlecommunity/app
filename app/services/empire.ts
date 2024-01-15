@@ -1,9 +1,4 @@
-import {
-  EmpireCreateParams,
-  EmpireBoostParams,
-  EmpireGetBoostsParams,
-  EmpireGetBoostsResult,
-} from 'app/interfaces';
+import { EmpireCreateParams, EmpireGetBoostsParams, EmpireGetBoostsResult } from 'app/interfaces';
 import * as vex from 'app/vex';
 import BoostsRPCStore from 'app/stores/rpc/empire/boosts';
 import environment from 'app/environment';
@@ -12,12 +7,11 @@ import ReactTooltip from 'react-tooltip';
 import server from 'app/server';
 import ServiceBase from 'app/services/base';
 
-import YAHOO from 'app/shims/yahoo';
 import LegacyHooks from 'app/legacyHooks';
 
 class EmpireService extends ServiceBase {
   async getStatus() {
-    return this.call('empire', 'get_status', {});
+    return this.call('empire', 'get_status', []);
   }
 
   async create(empire: EmpireCreateParams) {
@@ -38,7 +32,7 @@ class EmpireService extends ServiceBase {
   }
 
   async logout() {
-    await this.call('empire', 'logout', {});
+    await this.call('empire', 'logout', []);
 
     LegacyHooks.resetGame();
 
@@ -47,10 +41,10 @@ class EmpireService extends ServiceBase {
   }
 
   getBoosts() {
-    const params: EmpireGetBoostsParams = {};
+    const params: EmpireGetBoostsParams = [];
     server.call({
       module: 'empire',
-      method: 'get_boosts',
+      method: 'view_boosts',
       params: params,
       addSession: true,
       success: (result: EmpireGetBoostsResult) => {
@@ -60,11 +54,10 @@ class EmpireService extends ServiceBase {
   }
 
   setBoost(type: string, weeks: number) {
-    const params: EmpireBoostParams = { type, weeks };
     server.call({
       module: 'empire',
-      method: 'set_boost',
-      params: params,
+      method: 'boost_' + type,
+      params: [weeks],
       addSession: true,
       success: (result: EmpireGetBoostsResult) => {
         BoostsRPCStore.update(result);
@@ -75,7 +68,7 @@ class EmpireService extends ServiceBase {
   getInviteFriendUrl() {
     server.call({
       module: 'empire',
-      method: 'invite_friend',
+      method: 'get_invite_friend_url',
       params: [],
       addSession: true,
       success: (result: any) => {
@@ -87,11 +80,8 @@ class EmpireService extends ServiceBase {
   inviteFriend(email: string, message: string) {
     server.call({
       module: 'empire',
-      method: 'get_invite_friend_url',
-      params: {
-        email,
-        custom_message: message,
-      },
+      method: 'invite_friend',
+      params: [email, message],
       addSession: true,
       success: () => {
         vex.alert('Invite email sent!');

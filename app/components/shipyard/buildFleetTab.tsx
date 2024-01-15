@@ -33,8 +33,10 @@ class BuildFleetTab extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const res = await lacuna.shipyard.getBuildable({ building_id: this.props.building.id });
-    this.setState({ data: res });
+    const { result } = await lacuna.shipyard.getBuildable({ building_id: this.props.building.id });
+    if (result) {
+      this.setState({ data: result });
+    }
   }
 
   handleShowChange(e: React.ChangeEvent<HTMLSelectElement>) {

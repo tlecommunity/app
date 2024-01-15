@@ -25,9 +25,9 @@ The client has two run modes for local development:
 
 # Ideas
 
-Got an idea? [Let us know!](https://github.com/tlecommunity/v2/issues)
+Got an idea? [Let us know!](https://github.com/tlecommunity/app/issues)
 
-[![Yoda and feature requests](img/feature-request.jpg)](https://github.com/tlecommunity/v2/issues)
+[![Yoda and feature requests](img/feature-request.jpg)](https://github.com/tlecommunity/app/issues)
 
 # Hacking
 

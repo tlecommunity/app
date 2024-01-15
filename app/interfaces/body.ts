@@ -1,7 +1,7 @@
 import { IntBool, ServerDate } from 'app/interfaces';
 
 export interface BodyGetBuildingsParams {
-  body_id: number;
+  0: number;
 }
 
 export interface BodyGetBuildingsResponse {
@@ -136,7 +136,7 @@ export interface BodyGetStatusResponse {
 }
 
 export interface BodyGetBodyStatusParams {
-  body_id: number;
+  0: number;
 }
 
 export interface BodyGetBodyStatusResponse {

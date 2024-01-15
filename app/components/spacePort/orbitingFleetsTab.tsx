@@ -25,12 +25,14 @@ class OrbitingFleetsTab extends React.Component<Props, State> {
 
   async componentDidMount() {
     console.log(this.props.building.id);
-    const res = await lacuna.spacePort.viewOrbitingFleets({
+    const { result } = await lacuna.spacePort.viewOrbitingFleets({
       target: { body_id: BodyRPCStore.id },
     });
-    this.setState({
-      fleets: res.orbiting,
-    });
+    if (result) {
+      this.setState({
+        fleets: result.orbiting,
+      });
+    }
   }
 
   render() {

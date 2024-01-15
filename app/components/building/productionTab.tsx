@@ -48,18 +48,20 @@ class ProductionTab extends React.Component<Props> {
   }
 
   async onUpgradeClick() {
-    const res = await lacuna
+    const { result } = await lacuna
       .buildingFromUrl(this.props.building.url)
       .upgrade({ building_id: this.props.building.id });
 
-    YAHOO.lacuna.MapPlanet.ReloadBuilding({
-      ...this.props.building,
-      ...{
-        pending_build: res.building.pending_build,
-      },
-    });
+    if (result) {
+      YAHOO.lacuna.MapPlanet.ReloadBuilding({
+        ...this.props.building,
+        ...{
+          pending_build: result.building.pending_build,
+        },
+      });
 
-    WindowsStore.closeAll();
+      WindowsStore.closeAll();
+    }
   }
 
   render() {

@@ -24,8 +24,10 @@ class Captcha extends React.Component<Props, State> {
   }
 
   async fetchCaptcha() {
-    const { guid, url } = await lacuna.captcha.fetch();
-    this.setState({ guid, url, solution: '' });
+    const { result } = await lacuna.captcha.fetch();
+    if (result) {
+      this.setState({ guid: result.guid, url: result.url, solution: '' });
+    }
   }
 
   componentDidMount() {

@@ -11,6 +11,14 @@ import {
   EmpireLogoutParams,
   EmpireLogoutResponse,
 } from 'app/interfaces';
+import {
+  BodyGetBuildingsParams,
+  BodyGetBuildingsResponse,
+  BodyGetStatusParams,
+  BodyGetStatusResponse,
+  BodyRearrangeBuildingsParams,
+  BodyRearrangeBuildingsResponse,
+} from 'app/interfaces/body';
 
 class ServiceBase {
   call(
@@ -47,6 +55,27 @@ class ServiceBase {
     params: EmpireLogoutParams,
     addSession?: boolean
   ): Promise<EmpireLogoutResponse>;
+
+  call(
+    module: 'body',
+    method: 'get_buildings',
+    params: BodyGetBuildingsParams,
+    addSession?: boolean
+  ): Promise<BodyGetBuildingsResponse>;
+
+  call(
+    module: 'body',
+    method: 'get_status',
+    params: BodyGetStatusParams,
+    addSession?: boolean
+  ): Promise<BodyGetStatusResponse>;
+
+  call(
+    module: 'body',
+    method: 'rearrange_buildings',
+    params: BodyRearrangeBuildingsParams,
+    addSession?: boolean
+  ): Promise<BodyRearrangeBuildingsResponse>;
 
   call(module: string, method: string, params: any, addSession = true): Promise<any> {
     return new Promise((resolve, reject) => {

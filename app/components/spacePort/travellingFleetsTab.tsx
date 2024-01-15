@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import { Building, Fleet } from 'app/interfaces';
+import { Building } from 'app/interfaces';
+import { types } from '@tlecommunity/client';
 import FleetItem from 'app/components/spacePort/fleetItem';
 import lacuna from 'app/lacuna';
 
@@ -9,7 +10,7 @@ type Props = {
 };
 
 type State = {
-  fleets: Fleet[];
+  fleets: types.SpacePort.Fleet[];
   fleetCount: number;
   shipCount: number;
 };
@@ -21,14 +22,16 @@ class TravellingFleetsTab extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const res = await lacuna.spacePort.viewTravellingFleets({
+    const { result } = await lacuna.spacePort.viewTravellingFleets({
       building_id: this.props.building.id,
     });
-    this.setState({
-      fleets: res.travelling,
-      fleetCount: res.number_of_fleets_travelling,
-      shipCount: res.number_of_ships_travelling,
-    });
+    if (result) {
+      this.setState({
+        fleets: result.travelling,
+        fleetCount: result.number_of_fleets_travelling,
+        shipCount: result.number_of_ships_travelling,
+      });
+    }
   }
 
   render() {

@@ -27,11 +27,13 @@ class SendFleetsTab extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const { available } = await lacuna.spacePort.viewAvailableFleets({
+    const { result } = await lacuna.spacePort.viewAvailableFleets({
       body_id: BodyRPCStore.id,
       target: { body_id: this.props.options.id },
     });
-    this.setState({ fleets: available });
+    if (result) {
+      this.setState({ fleets: result.available });
+    }
   }
 
   async sendFleet(fleetId: number, quantity: number) {

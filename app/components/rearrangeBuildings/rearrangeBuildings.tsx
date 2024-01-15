@@ -30,24 +30,29 @@ class RearrangeBuildings extends React.Component<any, State> {
 
   async componentDidMount(): Promise<void> {
     const matrix = await RearrangeBuildingsService.fetchBuildingsMatrix(BodyRPCStore.id);
-    this.setState({ matrix });
+    if (matrix) {
+      this.setState({ matrix });
+    }
   }
 
   async rearrangePlanet(): Promise<void> {
-    const res = await RearrangeBuildingsService.rearrangeBuildingsFromMatrix(
+    const { result } = await RearrangeBuildingsService.rearrangeBuildingsFromMatrix(
       BodyRPCStore.id,
       this.state.matrix
     );
-    const moved = res.moved.length;
 
-    vex.alert(
-      `Successfully rearranged ${moved} ${pluralize(moved, 'building', 'buildings')}`,
-      () => {
-        WindowsStore.close('rearrangeBuildings');
-      }
-    );
+    if (result) {
+      const moved = result.moved.length;
 
-    LegacyHooks.refreshPlanet();
+      vex.alert(
+        `Successfully rearranged ${moved} ${pluralize(moved, 'building', 'buildings')}`,
+        () => {
+          WindowsStore.close('rearrangeBuildings');
+        }
+      );
+
+      LegacyHooks.refreshPlanet();
+    }
   }
 
   tileClick(selected: BuildingCoordinates): void {

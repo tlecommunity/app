@@ -17,7 +17,10 @@ class CreditsTab extends React.Component<any, State> {
   }
 
   async componentDidMount() {
-    this.setState({ credits: await lacuna.stats.credits() });
+    const { result } = await lacuna.stats.credits();
+    if (result) {
+      this.setState({ credits: result });
+    }
   }
 
   render() {

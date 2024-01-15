@@ -23,10 +23,12 @@ class IncomingFleetsTab extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const { incoming } = await lacuna.spacePort.viewIncomingFleets({
+    const { result } = await lacuna.spacePort.viewIncomingFleets({
       target: { star_id: this.props.options.id },
     });
-    this.setState({ fleets: incoming });
+    if (result) {
+      this.setState({ fleets: result.incoming });
+    }
   }
 
   render() {

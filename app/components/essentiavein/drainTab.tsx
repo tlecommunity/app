@@ -22,8 +22,8 @@ class DrainTab extends React.Component<Props> {
 
     console.assert(typeof times === 'number', 'times should be a number');
 
-    const res = await lacuna.essentiaVein.drain([id, times]);
-    if (res) {
+    const { result } = await lacuna.essentiaVein.drain({ buildingId: id, times });
+    if (result) {
       vex.alert('Drain successful');
     }
   }
