@@ -1,11 +1,6 @@
 import React from 'react';
-import server from 'app/server';
-import {
-  BuildingWindowOptions,
-  BuildingsViewResponse,
-  Building,
-  BuildingComponentProps,
-} from 'app/interfaces';
+import lacuna from 'app/lacuna';
+import { BuildingWindowOptions, Building, BuildingComponentProps } from 'app/interfaces';
 
 type Props = {
   options: BuildingWindowOptions;
@@ -88,16 +83,13 @@ function withBuildingData<Type extends Building>(
       };
     }
 
-    getBuildingData() {
-      server.call({
-        module: this.props.options.url.replace(/^\//, ''),
-        method: 'view',
-        params: { building_id: this.props.options.id },
-        addSession: true,
-        success: (result: BuildingsViewResponse) => {
-          this.setState({ building: result.building });
-        },
+    async getBuildingData() {
+      const { result } = await lacuna.buildingFromUrl(this.props.options.url).view({
+        building_id: this.props.options.id,
       });
+      if (result) {
+        this.setState({ building: result.building as Type });
+      }
     }
 
     componentDidMount() {
