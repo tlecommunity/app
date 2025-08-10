@@ -1,75 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 
 import BodyRPCStore from 'app/stores/rpc/body';
 import MenuStore, { PLANET_MAP_MODE, STAR_MAP_MODE } from 'app/stores/menu';
-
-declare const YAHOO: any;
+import LegacyHooks from 'app/legacyHooks';
 
 // TODO: factor out all this glue code
 
-class Map extends React.Component {
-  previousMapMode = '';
+const Map = function () {
+  const [previousMapMode, setPreviousMapMode] = useState(PLANET_MAP_MODE);
+  const [previousPlanetId, setPreviousPlanetId] = useState(-1);
 
-  previousPlanetId = -1;
-
-  componentDidUpdate() {
+  useEffect(() => {
     // Do nothing if the menu isn't shown.
     if (MenuStore.menuShown === false) {
       // Reset these values because we're *probably* logged out.
-      this.previousMapMode = PLANET_MAP_MODE;
-      this.previousPlanetId = -1;
+      setPreviousMapMode(PLANET_MAP_MODE);
+      setPreviousPlanetId(-1);
     }
 
     if (!MenuStore.planetId) {
       return;
     }
 
-    // console.log('Rendering map');
-    // console.log('mapMode = ' + MenuStore.mapMode + '(' + this.previousMapMode + ')');
-    // console.log('planet = ' + MenuStore.planetId + '(' + this.previousPlanetId + ')');
-
-    const Lacuna = YAHOO.lacuna;
+    console.log('Rendering map');
+    console.log(`mapMode = ${MenuStore.mapMode} (previous: ${previousMapMode})`);
+    console.log(`planet = ${MenuStore.planetId} (previous: ${previousPlanetId})`);
 
     if (
       // Render if the planet id has changed... OR...
-      this.previousPlanetId !== MenuStore.planetId ||
-      // Render if we've changed from the starMap to the planetMap
-      (this.previousMapMode !== MenuStore.mapMode && MenuStore.mapMode === PLANET_MAP_MODE)
+      (previousPlanetId !== MenuStore.planetId ||
+        // Render if we've changed from the starMap to the planetMap
+        (previousMapMode !== MenuStore.mapMode && MenuStore.mapMode === PLANET_MAP_MODE)) &&
+      MenuStore.planetId !== -1
     ) {
-      Lacuna.MapStar.MapVisible(false);
-      Lacuna.MapPlanet.MapVisible(true);
-      Lacuna.MapPlanet.Load(MenuStore.planetId, true, MenuStore.mapMode === STAR_MAP_MODE);
-
-      this.previousPlanetId = MenuStore.planetId;
-      this.previousMapMode = MenuStore.mapMode;
-
-      return;
+      LegacyHooks.loadPlanet(MenuStore.planetId, MenuStore.mapMode === STAR_MAP_MODE);
+      setPreviousPlanetId(MenuStore.planetId);
+      setPreviousMapMode(MenuStore.mapMode);
+    } else if (MenuStore.mapMode !== previousMapMode && MenuStore.mapMode === STAR_MAP_MODE) {
+      LegacyHooks.loadStarmap(BodyRPCStore.x, BodyRPCStore.y);
+      setPreviousPlanetId(MenuStore.planetId);
+      setPreviousMapMode(MenuStore.mapMode);
     }
+  }, [MenuStore.planetId, MenuStore.mapMode]);
 
-    if (MenuStore.mapMode !== this.previousMapMode && MenuStore.mapMode === STAR_MAP_MODE) {
-      // Render star map view.
-      Lacuna.MapPlanet.MapVisible(false);
-      Lacuna.MapStar.MapVisible(true);
-      Lacuna.MapStar.Load();
-      Lacuna.MapStar.Jump(BodyRPCStore.x, BodyRPCStore.y);
-
-      this.previousPlanetId = MenuStore.planetId;
-      this.previousMapMode = MenuStore.mapMode;
-    }
-  }
-
-  render() {
-    //
-    // We access these values so that MobX knows that we are interested in tracking them.
-    // This component doesn't render anything so we need to be explicit about the values
-    // we are using, allowing the framework to notify us appropriately.
-    //
-    const { mapMode } = MenuStore;
-    const { planetId } = MenuStore;
-
-    return <div />;
-  }
-}
+  return <div />;
+};
 
 export default observer(Map);

@@ -1,7 +1,7 @@
 declare const YAHOO: any;
 
 //
-// Instead of blindly calling methods in the YUI code, use this hooks instead.
+// Instead of blindly calling methods in the YUI code, use these hooks instead.
 //
 class LegacyHooks {
   static refreshPlanet(): void {
@@ -16,6 +16,21 @@ class LegacyHooks {
 
   static tick(): void {
     YAHOO.lacuna.Game.onTick.fire();
+  }
+
+  static loadPlanet(planetId: number, silent: boolean) {
+    console.log(`Legacy hook loading planet ID ${planetId}`);
+    YAHOO.lacuna.MapStar.MapVisible(false);
+    YAHOO.lacuna.MapPlanet.MapVisible(true);
+    YAHOO.lacuna.MapPlanet.Load(planetId, true, silent);
+  }
+
+  static loadStarmap(x: number, y: number) {
+    console.log(`Legacy hook loading starmap at coordinates X: ${x}, Y: ${y}`);
+    YAHOO.lacuna.MapPlanet.MapVisible(false);
+    YAHOO.lacuna.MapStar.MapVisible(true);
+    YAHOO.lacuna.MapStar.Load();
+    YAHOO.lacuna.MapStar.Jump(x, y);
   }
 }
 

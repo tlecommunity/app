@@ -1,6 +1,7 @@
 import { Lacuna } from '@tlecommunity/client';
+import environment from './environment';
 
-const lacuna = new Lacuna({ serverUrl: 'http://localhost:8080' });
+const lacuna = new Lacuna({ serverUrl: environment.getServerUrl() });
 lacuna.log.setLogLevel('info');
 
 export default lacuna;

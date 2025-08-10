@@ -6,6 +6,7 @@ import InviteRPCStore from 'app/stores/rpc/empire/invite';
 import ReactTooltip from 'react-tooltip';
 import server from 'app/server';
 import ServiceBase from 'app/services/base';
+import MenuStore from 'app/stores/menu';
 
 import LegacyHooks from 'app/legacyHooks';
 
@@ -33,6 +34,8 @@ class EmpireService extends ServiceBase {
 
   async logout() {
     await this.call('empire', 'logout', []);
+
+    MenuStore.reset();
 
     LegacyHooks.resetGame();
 

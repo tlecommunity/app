@@ -13,3 +13,5 @@ app/config/user.json
 dist/
 
 coverage/
+
+.env.local

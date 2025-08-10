@@ -39,11 +39,11 @@ class MenuStore {
   }
 
   toggleMapMode() {
-    this.mapMode = this.mapMode == PLANET_MAP_MODE ? STAR_MAP_MODE : PLANET_MAP_MODE;
+    this.mapMode = this.mapMode === PLANET_MAP_MODE ? STAR_MAP_MODE : PLANET_MAP_MODE;
   }
 
   changePlanet(id: number) {
-    console.log(`Changing to planet (#${id}).`);
+    console.log(`Menu changing to planet (#${id}).`);
     this.mapMode = PLANET_MAP_MODE;
     this.planetId = id;
   }
@@ -70,6 +70,11 @@ class MenuStore {
 
   hideLoader() {
     this.loaderShown = false;
+  }
+
+  reset() {
+    this.mapMode = PLANET_MAP_MODE;
+    this.planetId = -1;
   }
 }
 
