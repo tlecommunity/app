@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: '/app',
   resolve: {
     alias: [
       { find: 'app', replacement: '/app' },
