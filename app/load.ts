@@ -62,6 +62,7 @@ import 'app/yui/messaging';
 import 'app/yui/profile';
 import 'app/yui/stats';
 import 'app/yui/notify';
+import 'app/yui/info';
 
 interface QueryParams {
   [index: string]: string;
