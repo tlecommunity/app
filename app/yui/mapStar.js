@@ -722,30 +722,34 @@ if (typeof YAHOO.lacuna.MapStar == 'undefined' || !YAHOO.lacuna.MapStar) {
           var tile = this._map.tileLayer.findTileById(matchedEl.id);
           if (tile && tile.data) {
             if (tile.data.isStar) {
-              console.log('Showing star panel', tile);
               this.ShowStar(tile);
-              WindowsStore.add('starDetails', {
-                color: tile.data.color,
-                id: tile.data.id,
-                name: tile.data.name,
-                x: tile.data.x,
-                y: tile.data.y,
-                zone: tile.data.zone,
-                influence: tile.data.influence,
-              });
+              if (environment.isDevelopment()) {
+                console.log('Showing star panel', tile);
+                WindowsStore.add('starDetails', {
+                  color: tile.data.color,
+                  id: tile.data.id,
+                  name: tile.data.name,
+                  x: tile.data.x,
+                  y: tile.data.y,
+                  zone: tile.data.zone,
+                  influence: tile.data.influence,
+                });
+              }
             } else if (tile.data.isPlanet) {
-              console.log('Showing planet panel', tile);
               this.ShowPlanet(tile);
-              WindowsStore.add('bodyDetails', {
-                name: tile.data.name,
-                x: tile.data.x,
-                y: tile.data.y,
-                image: tile.data.image,
-                orbit: tile.data.orbit,
-                size: tile.data.size,
-                id: tile.data.id,
-                type: tile.data.type,
-              });
+              if (environment.isDevelopment()) {
+                console.log('Showing planet panel', tile);
+                WindowsStore.add('bodyDetails', {
+                  name: tile.data.name,
+                  x: tile.data.x,
+                  y: tile.data.y,
+                  image: tile.data.image,
+                  orbit: tile.data.orbit,
+                  size: tile.data.size,
+                  id: tile.data.id,
+                  type: tile.data.type,
+                });
+              }
             }
           }
         }
