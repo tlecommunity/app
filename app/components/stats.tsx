@@ -1,20 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import StatsWindowStore from 'app/stores/window/stats';
 
 import YAHOO from 'app/shims/yahoo';
 
-class StatsWindow extends React.Component {
-  componentDidUpdate() {
+const StatsWindow = function () {
+  useEffect(() => {
     if (StatsWindowStore.shown) {
       YAHOO.lacuna.Stats.show();
     }
-  }
+  }, [StatsWindowStore.shown]);
 
-  render() {
-    const { shown } = StatsWindowStore;
-    return <div />;
-  }
-}
+  return <div />;
+};
 
 export default observer(StatsWindow);
