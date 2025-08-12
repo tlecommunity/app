@@ -995,7 +995,7 @@ if (typeof YAHOO.lacuna.MapPlanet == 'undefined' || !YAHOO.lacuna.MapPlanet) {
       DetailsView: function (tile) {
         if (FactoryMap[tile.data.url]) {
           this.DetailsViewLegacy(tile);
-        } else if (WindowMap[tile.data.url.substring(1)]) {
+        } else if (WindowMap[tile.data.url.substring(1)] || !FactoryMap[tile.data.url]) {
           this.DetailsViewReact(tile);
         }
 
