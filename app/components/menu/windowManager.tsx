@@ -20,18 +20,12 @@ import PoliticsTrainingWindow from 'app/components/politicsTraining';
 import RearrangeBuildings from 'app/components/rearrangeBuildings/rearrangeBuildings';
 import RegisterWindow from 'app/components/register';
 import ServerClockWindow from 'app/components/serverClock';
-import ShipyardWindow from 'app/components/shipyard';
-import SpacePortWindow from 'app/components/spaceport';
 import StarDetailsWindow from 'app/components/starDetails';
 import TheftTrainingWindow from 'app/components/theftTraining';
 
 import { WindowDefinition } from 'app/interfaces';
 
-interface WindowMap {
-  [index: string]: WindowDefinition;
-}
-
-export const WindowMap: WindowMap = {
+export const WindowMap: Record<string, WindowDefinition> = {
   about: {
     component: AboutWindow,
     config: {
@@ -169,23 +163,23 @@ export const WindowMap: WindowMap = {
     },
   },
 
-  shipyard: {
-    component: ShipyardWindow,
-    config: {
-      title: 'Shipyard',
-      width: 700,
-      height: 500,
-    },
-  },
+  // shipyard: {
+  //   component: ShipyardWindow,
+  //   config: {
+  //     title: 'Shipyard',
+  //     width: 700,
+  //     height: 500,
+  //   },
+  // },
 
-  spaceport: {
-    component: SpacePortWindow,
-    config: {
-      title: 'Space Port',
-      width: 700,
-      height: 500,
-    },
-  },
+  // spaceport: {
+  //   component: SpacePortWindow,
+  //   config: {
+  //     title: 'Space Port',
+  //     width: 700,
+  //     height: 500,
+  //   },
+  // },
 
   starDetails: {
     component: StarDetailsWindow,

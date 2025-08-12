@@ -6,6 +6,7 @@ import WindowsStore from 'app/stores/windows';
 import EmpireRPCStore from 'app/stores/rpc/empire';
 import BodyRPCStore from 'app/stores/rpc/body';
 import MenuStore from 'app/stores/menu';
+import environment from 'app/environment';
 
 import { WindowMap } from 'app/components/menu/windowManager';
 
@@ -43,6 +44,7 @@ if (typeof YAHOO.lacuna.MapPlanet == 'undefined' || !YAHOO.lacuna.MapPlanet) {
       '/park': Lacuna.buildings.Park,
       '/planetarycommand': Lacuna.buildings.PlanetaryCommand,
       '/security': Lacuna.buildings.Security,
+      '/shipyard': Lacuna.buildings.Shipyard,
       '/spaceport': Lacuna.buildings.SpacePort,
       '/ssla': Lacuna.buildings.SpaceStationLab,
       '/subspacesupplydepot': Lacuna.buildings.SubspaceSupplyDepot,
@@ -993,8 +995,15 @@ if (typeof YAHOO.lacuna.MapPlanet == 'undefined' || !YAHOO.lacuna.MapPlanet) {
       DetailsView: function (tile) {
         if (FactoryMap[tile.data.url]) {
           this.DetailsViewLegacy(tile);
+        } else if (WindowMap[tile.data.url.substring(1)]) {
+          this.DetailsViewReact(tile);
         }
-        if (WindowMap[tile.data.url.substring(1)] || !FactoryMap[tile.data.url]) {
+
+        if (
+          FactoryMap[tile.data.url] &&
+          WindowMap[tile.data.url.substring(1)] &&
+          environment.isDevelopment()
+        ) {
           this.DetailsViewReact(tile);
         }
       },

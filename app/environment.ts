@@ -12,6 +12,10 @@ const environment = {
   getServerUrl() {
     return util.ensureTrailingSlash(import.meta.env.LACUNA_SERVER_URL);
   },
+
+  isDevelopment() {
+    return window.location.hostname === 'localhost';
+  },
 };
 
 export default environment;
